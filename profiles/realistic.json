@@ -1,0 +1,13 @@
+{
+  "name": "realistic",
+  "description": "Baseline pipeline (identical to the frozen fracture_utility behaviour): heterogeneous SOCP fracture, sparse plastic modes, stress-gated routing, Sellan contact projection. Extra tools are provided for experimentation; switching fracture_response.params.mode to 'field' makes their shape matter for fracture too.",
+  "runtime": {
+    "default_tool": "contact",
+    "tools": {
+      "contact": {"plugin": "realistic.contact_patch", "params": {"spread_radius": 0.05}},
+      "blunt":   {"plugin": "bludgeon.blunt_dome", "params": {"radius": 0.15}},
+      "spike":   {"plugin": "puncture.spike", "params": {"radius": 0.02, "depth": 0.35}},
+      "blade":   {"plugin": "slash.blade_line", "params": {"length": 0.5, "width": 0.03}}
+    }
+  }
+}
