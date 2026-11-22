@@ -17,3 +17,12 @@ from . import delaunay_remesh
 
 from . elastic_modes import ElasticModes
 from . import elastic_modes
+
+from . plastic_state import PlasticState
+from . import plastic_state
+
+from . plastic_modes import PlasticModes
+from . import plastic_modes
+
+from . plastic_fracture_asset import PlasticFractureAsset
+from . import plastic_fracture_asset
