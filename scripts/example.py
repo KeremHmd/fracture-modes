@@ -1,4 +1,6 @@
 # Include existing libraries
+import os
+from datetime import datetime
 import numpy as np
 import igl
 import tetgen
@@ -6,6 +8,12 @@ import tetgen
 from context import fracture_utility as fracture
 from context import gpytoolbox
 from gpytoolbox.copyleft import lazy_cage
+
+# Per-run output folder: outputs go to out/example/<timestamp>/ instead of
+# the repo root, to match the convention used by every other script.
+out_dir = os.path.join("out", "example", datetime.now().strftime("%Y%m%d_%H%M%S"))
+os.makedirs(out_dir, exist_ok=True)
+print(f"Outputs will be written to: {out_dir}")
 
 # This is the "fine mesh", i.e. the mesh we use for rendering
 v_fine, f_fine = igl.read_triangle_mesh("data/bunny_oded.obj")
@@ -23,7 +31,7 @@ params = fracture.fracture_modes_parameters(num_modes=10,verbose=True,d=3)
 # Compute fracture modes
 modes.compute_modes(parameters=params)
 modes.impact_precomputation(v_fine=v_fine,f_fine=f_fine)
-modes.write_segmented_modes("output_modes")
+modes.write_segmented_modes(os.path.join(out_dir, "modes"))
 
 contact_point = nodes[1,:]
 direction = np.array([1.0,0.0,0.0])
@@ -33,5 +41,5 @@ modes.impact_projection(contact_point=contact_point,direction=direction)
 new_contact_point = nodes[5,:]
 modes.impact_projection(contact_point=new_contact_point,direction=direction)
 # Write segmented output to obj
-modes.write_segmented_output("output.obj")
+modes.write_segmented_output(os.path.join(out_dir, "output.obj"))
 print("Example ran successfully!")

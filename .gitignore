@@ -138,3 +138,10 @@ dmypy.json
 _skipped.face
 .gitignore
 *.mov
+
+# Generated outputs
+out/
+*.pkl
+materials/
+data/wall.obj
+data/pillar.obj
