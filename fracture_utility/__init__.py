@@ -14,3 +14,6 @@ from . fracture_modes_heterogeneous import fracture_modes_heterogeneous
 
 from . import cap_detail
 from . import delaunay_remesh
+
+from . elastic_modes import ElasticModes
+from . import elastic_modes
