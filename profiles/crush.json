@@ -1,0 +1,22 @@
+{
+  "name": "crush",
+  "description": "Wide-ram crushing with no fracture. Deformation is purely modal (a few coefficients per piece; no remeshing at runtime) and bounded by per-mode strain caps, a plastic-work budget and hardening, so every object converges to a final crushed state. Precompute skips the fracture optimisation (single-piece generator).",
+  "precompute": {
+    "fracture": {"plugin": "artistic.voronoi_shards", "params": {"num_cells": 1}},
+    "elastic": {"plugin": "realistic.linear_elastic", "params": {"num_modes": 60}},
+    "plastic": {"plugin": "realistic.yield_modes", "params": {"num_modes": 30}}
+  },
+  "runtime": {
+    "default_tool": "ram",
+    "tools": {
+      "ram":      {"plugin": "crush.ram", "params": {"radius": 0.3, "rim": 0.08, "reach": 0.12}},
+      "wide_ram": {"plugin": "crush.ram", "params": {"radius": 0.5, "rim": 0.12, "reach": 0.2}},
+      "club":     {"plugin": "bludgeon.blunt_dome", "params": {"radius": 0.15}}
+    },
+    "router": {"plugin": "crush.dent_only"},
+    "plastic_response": {"plugin": "crush.modal_dent",
+                         "params": {"window_radius": 0.3, "depth": 0.04, "ultimate_strain": 0.05,
+                                    "work_budget": 0.35, "hardening": 2.0}},
+    "fracture_response": null
+  }
+}

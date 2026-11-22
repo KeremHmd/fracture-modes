@@ -1,0 +1,20 @@
+{
+  "name": "blunt_trauma",
+  "description": "Bludgeon-oriented: wide dome impacts, local saturating dents built from the top plastic modes, breaking only at well above sigma_c. Larger elastic/plastic bases give the dents finer spatial support.",
+  "precompute": {
+    "elastic": {"plugin": "realistic.linear_elastic", "params": {"num_modes": 60}},
+    "plastic": {"plugin": "realistic.yield_modes", "params": {"num_modes": 30}}
+  },
+  "runtime": {
+    "default_tool": "club",
+    "tools": {
+      "club":   {"plugin": "bludgeon.blunt_dome", "params": {"radius": 0.15, "exponent": 1.5}},
+      "hammer": {"plugin": "bludgeon.blunt_dome", "params": {"radius": 0.07, "exponent": 2.5}}
+    },
+    "router": {"plugin": "bludgeon.blunt_gate", "params": {"break_factor": 1.8}},
+    "plastic_response": {"plugin": "bludgeon.local_dent",
+                         "params": {"top_k": 6, "radius": 0.18, "depth": 0.03, "max_depth": 0.12}},
+    "fracture_response": {"plugin": "realistic.sellan_projection",
+                          "params": {"mode": "field", "threshold": 10.0}}
+  }
+}

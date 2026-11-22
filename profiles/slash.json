@@ -1,0 +1,19 @@
+{
+  "name": "slash",
+  "description": "Slash-oriented: grain-weighted SOCP (cuts prefer planes perpendicular to the grain normal) plus elongated blade contacts projected as a field.",
+  "precompute": {
+    "fracture": {"plugin": "realistic.sellan_socp",
+                 "params": {"num_modes": 12,
+                            "weights": {"plugin": "slash.grain",
+                                        "params": {"grain_normal": [1.0, 0.0, 0.0], "strength": 0.85}}}}
+  },
+  "runtime": {
+    "default_tool": "blade",
+    "tools": {
+      "blade":   {"plugin": "slash.blade_line", "params": {"length": 0.5, "width": 0.03}},
+      "cleaver": {"plugin": "slash.blade_line", "params": {"length": 0.8, "width": 0.05}}
+    },
+    "fracture_response": {"plugin": "realistic.sellan_projection",
+                          "params": {"mode": "field", "threshold": 8.0}}
+  }
+}

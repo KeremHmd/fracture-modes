@@ -1,0 +1,19 @@
+{
+  "name": "blunt_dent_only",
+  "description": "Blunt trauma with fracture excluded: hits only ever dent, each dent saturates at max_depth, and once a region is saturated further hits there do nothing (the piece has reached its final state). Same precompute as blunt_trauma, so trees built with either profile are interchangeable at runtime.",
+  "precompute": {
+    "elastic": {"plugin": "realistic.linear_elastic", "params": {"num_modes": 60}},
+    "plastic": {"plugin": "realistic.yield_modes", "params": {"num_modes": 30}}
+  },
+  "runtime": {
+    "default_tool": "club",
+    "tools": {
+      "club":   {"plugin": "bludgeon.blunt_dome", "params": {"radius": 0.15, "exponent": 1.5}},
+      "hammer": {"plugin": "bludgeon.blunt_dome", "params": {"radius": 0.07, "exponent": 2.5}}
+    },
+    "router": {"plugin": "bludgeon.blunt_gate", "params": {"break_factor": 1e12, "dent_brittle": true}},
+    "plastic_response": {"plugin": "bludgeon.local_dent",
+                         "params": {"top_k": 6, "radius": 0.18, "depth": 0.03, "max_depth": 0.12}},
+    "fracture_response": null
+  }
+}

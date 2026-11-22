@@ -1,0 +1,18 @@
+{
+  "name": "puncture",
+  "description": "Puncture-oriented: SOCP seeded with localised bumps (small local pieces), thin deep spike impacts, and a responder that only lets the fragment(s) on the penetration channel come off.",
+  "precompute": {
+    "fracture": {"plugin": "realistic.sellan_socp",
+                 "params": {"num_modes": 16,
+                            "init": {"plugin": "puncture.local_seeds", "params": {"sigma": 0.1}}}}
+  },
+  "runtime": {
+    "default_tool": "spike",
+    "tools": {
+      "spike":  {"plugin": "puncture.spike", "params": {"radius": 0.02, "depth": 0.35}},
+      "arrow":  {"plugin": "puncture.spike", "params": {"radius": 0.012, "depth": 0.6}}
+    },
+    "fracture_response": {"plugin": "puncture.local_hole",
+                          "params": {"threshold": 6.0, "channel_radius": 0.1, "channel_depth": 0.5}}
+  }
+}

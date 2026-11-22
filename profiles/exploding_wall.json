@@ -1,0 +1,24 @@
+{
+  "name": "exploding_wall",
+  "description": "Exaggerated, art-directed destruction: Voronoi shard pieces (no SOCP), a trigger-happy router, low separation threshold, and an explosive post-processor that launches and spins fragments. Plastic is disabled.",
+  "precompute": {
+    "fracture": {"plugin": "artistic.voronoi_shards", "params": {"num_cells": 40, "toughness_bias": 1.0}},
+    "elastic": {"plugin": "realistic.linear_elastic", "params": {"num_modes": 20}},
+    "plastic": null
+  },
+  "runtime": {
+    "world": {"impact_kick": 1.0},
+    "default_tool": "blast",
+    "tools": {
+      "blast": {"plugin": "bludgeon.blunt_dome", "params": {"radius": 0.35, "exponent": 1.0}},
+      "shot":  {"plugin": "puncture.spike", "params": {"radius": 0.03, "depth": 0.5}}
+    },
+    "router": {"plugin": "artistic.trigger_happy", "params": {"fracture_fraction": 0.3, "plastic_enabled": false}},
+    "fracture_response": {"plugin": "realistic.sellan_projection",
+                          "params": {"mode": "field", "threshold": 2.0}},
+    "post": [
+      {"plugin": "artistic.explosive_kick", "params": {"speed": 2.5, "spin": 8.0}},
+      {"plugin": "common.event_log"}
+    ]
+  }
+}
