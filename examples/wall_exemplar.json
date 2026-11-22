@@ -1,0 +1,41 @@
+{
+  "format": "modegen.exemplar/1",
+  "asset": "data/wall.obj",
+  "description": "Authored examples for the test wall (2.0 x 1.2 x 0.3 before normalisation; thin axis z). Positions and pivots are fractions of the root cage bounding box, translations fractions of its diagonal. Front = +z face; a hit on the front pushes toward -z.",
+  "units": "bbox",
+  "bones": [
+    {"name": "centre",       "position": [0.50, 0.50, 0.5]},
+    {"name": "left",         "position": [0.18, 0.50, 0.5]},
+    {"name": "right",        "position": [0.82, 0.50, 0.5]},
+    {"name": "top",          "position": [0.50, 0.90, 0.5]},
+    {"name": "top_left",     "position": [0.12, 0.88, 0.5]},
+    {"name": "top_right",    "position": [0.88, 0.88, 0.5]},
+    {"name": "bottom",       "position": [0.50, 0.08, 0.5]},
+    {"name": "bottom_left",  "position": [0.12, 0.10, 0.5]},
+    {"name": "bottom_right", "position": [0.88, 0.10, 0.5]}
+  ],
+  "examples": [
+    {"name": "dent_front_centre", "transforms": {"centre": {"translate": [0, 0, -0.05]}}},
+    {"name": "dent_back_centre",  "transforms": {"centre": {"translate": [0, 0,  0.05]}}},
+    {"name": "dent_front_left",   "transforms": {"left":   {"translate": [0, 0, -0.05]}}},
+    {"name": "dent_back_left",    "transforms": {"left":   {"translate": [0, 0,  0.05]}}},
+    {"name": "dent_front_right",  "transforms": {"right":  {"translate": [0, 0, -0.05]}}},
+    {"name": "dent_back_right",   "transforms": {"right":  {"translate": [0, 0,  0.05]}}},
+    {"name": "fold_top_left_back",
+     "transforms": {"top_left": {"rotate": {"axis": [1, -1, 0], "degrees": 35}, "pivot": [0.28, 0.72, 0.5]}}},
+    {"name": "fold_top_left_front",
+     "transforms": {"top_left": {"rotate": {"axis": [1, -1, 0], "degrees": -35}, "pivot": [0.28, 0.72, 0.5]}}},
+    {"name": "fold_top_right_back",
+     "transforms": {"top_right": {"rotate": {"axis": [1, 1, 0], "degrees": -35}, "pivot": [0.72, 0.72, 0.5]}}},
+    {"name": "fold_top_right_front",
+     "transforms": {"top_right": {"rotate": {"axis": [1, 1, 0], "degrees": 35}, "pivot": [0.72, 0.72, 0.5]}}},
+    {"name": "lean_top_back",
+     "transforms": {"top":       {"rotate": {"axis": [1, 0, 0], "degrees": -20}, "pivot": [0.5, 0.55, 0.5]},
+                    "top_left":  {"rotate": {"axis": [1, 0, 0], "degrees": -20}, "pivot": [0.5, 0.55, 0.5]},
+                    "top_right": {"rotate": {"axis": [1, 0, 0], "degrees": -20}, "pivot": [0.5, 0.55, 0.5]}}},
+    {"name": "lean_top_front",
+     "transforms": {"top":       {"rotate": {"axis": [1, 0, 0], "degrees": 20}, "pivot": [0.5, 0.55, 0.5]},
+                    "top_left":  {"rotate": {"axis": [1, 0, 0], "degrees": 20}, "pivot": [0.5, 0.55, 0.5]},
+                    "top_right": {"rotate": {"axis": [1, 0, 0], "degrees": 20}, "pivot": [0.5, 0.55, 0.5]}}}
+  ]
+}

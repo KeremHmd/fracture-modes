@@ -1,0 +1,23 @@
+{
+  "name": "exemplar_dents",
+  "description": "Example-based plasticity (Jones et al. 2016): a skinning rig with procedural dent and bend examples; each blunt hit moves the per-vertex example weights (impulse -> desired displacement -> weight step, geodesically smoothed). Dents first, breaks outright above 2 x sigma_c, and breaks once the dents are saturated at the examples.",
+  "precompute": {
+    "elastic": {"plugin": "realistic.linear_elastic", "params": {"num_modes": 30}},
+    "plastic": {"plugin": "exemplar.skinned_examples",
+                "params": {"presets": ["dent", "bend"], "num_bones": 12, "dent_depth": 0.05,
+                           "bend_angle": 30.0, "weight_radius": 0.12, "propagation_radius": 0.25}}
+  },
+  "runtime": {
+    "render": {"lift": "surface"},
+    "default_tool": "club",
+    "tools": {
+      "club":   {"plugin": "bludgeon.blunt_dome", "params": {"radius": 0.15, "exponent": 1.5}},
+      "hammer": {"plugin": "bludgeon.blunt_dome", "params": {"radius": 0.07, "exponent": 2.5}}
+    },
+    "router": {"plugin": "bludgeon.blunt_gate", "params": {"break_factor": 2.0, "dent_brittle": true}},
+    "plastic_response": {"plugin": "exemplar.impulse_blend",
+                         "params": {"impulse_time": 1.0e-3, "alpha": 1.0, "gamma": 0.08, "lam": 0.5}},
+    "fracture_response": {"plugin": "realistic.sellan_projection",
+                          "params": {"mode": "field", "threshold": 10.0}}
+  }
+}

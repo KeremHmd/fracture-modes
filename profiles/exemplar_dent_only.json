@@ -1,0 +1,22 @@
+{
+  "name": "exemplar_dent_only",
+  "description": "Example-based plasticity without fracture: same precompute as exemplar_dents (trees are interchangeable), but the router never breaks, so repeated hits blend toward the examples until every hit region is saturated (final state).",
+  "precompute": {
+    "elastic": {"plugin": "realistic.linear_elastic", "params": {"num_modes": 30}},
+    "plastic": {"plugin": "exemplar.skinned_examples",
+                "params": {"presets": ["dent", "bend"], "num_bones": 12, "dent_depth": 0.05,
+                           "bend_angle": 30.0, "weight_radius": 0.12, "propagation_radius": 0.25}}
+  },
+  "runtime": {
+    "render": {"lift": "surface"},
+    "default_tool": "club",
+    "tools": {
+      "club":   {"plugin": "bludgeon.blunt_dome", "params": {"radius": 0.15, "exponent": 1.5}},
+      "hammer": {"plugin": "bludgeon.blunt_dome", "params": {"radius": 0.07, "exponent": 2.5}}
+    },
+    "router": {"plugin": "crush.dent_only"},
+    "plastic_response": {"plugin": "exemplar.impulse_blend",
+                         "params": {"impulse_time": 1.0e-3, "alpha": 1.0, "gamma": 0.08, "lam": 0.5}},
+    "fracture_response": null
+  }
+}
